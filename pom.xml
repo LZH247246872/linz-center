@@ -18,6 +18,36 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>2.7.0</spring.boot.version>
     </properties>
 
+    <!-- 子模块继承后，提供作用：锁定版本+子module不用groupId和version -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <!--依赖的类型,一般就是依赖的文件类型，默认是jar,这里给的pom,其实就相当于引入了一个pom文件，在这个pom文件中指定了几乎所有org.springframework.boot中的组件版本
+                我们引入了这个pom，其实就相当于在项目中导入了这个pom中的所有依赖-->
+                <type>pom</type>
+                <!--通常和<type>pom</type>一起使用,表示引入pom中的依赖并且这些依赖不具有传递性-->
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.11</version>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
